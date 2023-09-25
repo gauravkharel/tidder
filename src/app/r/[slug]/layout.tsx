@@ -2,9 +2,9 @@ import { getAuthSession } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { notFound } from "next/navigation"
 import { format } from 'date-fns'
+import SubscribeLeaveToggle from "@/components/SubscribeLeaveToggle"
 
 // in the page, we have al the things needed for a subreddit details 
-
 const Layout = async ({
     children,
     params: { slug }
@@ -87,7 +87,9 @@ const Layout = async ({
                                 </div>
                             ) : null}
 
-                            
+                            {subreddit.creatorId !== session?.user.id ? (
+                                <SubscribeLeaveToggle subredditId={subreddit.id} subredditName={subreddit.name} isSubscribed={isSubscribed} />
+                            ): null}
                         </dl>
                     </div>
                 </div>
