@@ -30,7 +30,7 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
             const query = `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}&page=${pageParam}` +
                 (!!subredditName ? `&subredditName=${subredditName}` : '')
 
-            const { data } = axios.get(query)
+            const { data } = await axios.get(query)
             return data as ExtendedPost[]
         }, {
             // get to next page
@@ -51,16 +51,18 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
                     return acc
                 }, 0)
 
-                const currentVote = post.votes.find((vote) => vote.userId === session?.user.id)
+                const currentVote = post.votes.find(
+                    (vote) => vote.userId === session?.user.id
+                )
 
                 if(index === post.length - 1){
                     return (
                         <li key={post.id} ref={ref}>
-                            <Post />
+                            <Post commentAmt={post.commments} post={post} subredditName={post.subreddit.name} />
                         </li>
                     )
                 } else {
-                    return <Post />
+                    return <Post commentAmt={post.commments} key={post.id} post={post} subredditName={post.subreddit.name} />
                 }
             })}
         </ul>
