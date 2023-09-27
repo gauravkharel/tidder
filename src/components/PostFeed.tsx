@@ -58,16 +58,16 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
                 if(index === post.length - 1){
                     return (
                         <li key={post.id} ref={ref}>
-                            <Post commentAmt={post.commments} post={post} subredditName={post.subreddit.name} />
+                            <Post currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.commments} post={post} subredditName={post.subreddit.name} />
                         </li>
                     )
                 } else {
-                    return <Post commentAmt={post.commments} key={post.id} post={post} subredditName={post.subreddit.name} />
+                    return <Post currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.commments} key={post.id} post={post} subredditName={post.subreddit.name} />
                 }
             })}
         </ul>
 
     )
-}
+// }6:03:55 / 9:46:45
 
 export default PostFeed

@@ -3,7 +3,9 @@ import { FC, useRef } from 'react'
 import { formatTimeToNow } from '../lib/utils'
 import { MessageSquare } from 'lucide-react'
 import EditorOutput from './EditorOutput'
+import PostVoteClient from './post-vote/PostVoteClient'
 
+type PartialVote = Pick<Vote, 'type'>
 interface PostProps {
   subredditName: string
   post: Post & {
@@ -11,12 +13,15 @@ interface PostProps {
     votes: Vote[]
   }
   commentAmt: number
+  votesAmt: number
+  currentVote?: PartialVote
 }
 
-const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
+const Post: FC<PostProps> = ({ subredditName, post, commentAmt, votesAmt: _votesAmt, currentVote }) => {
   const pRef = useRef<HTMLDivElement>(null)
   return <div className='rounded-md bg-white shadow'>
     <div className='px-6 py-4 flex justify-between'>
+      <PostVoteClient postId={post.id} initialVote={currentVote?.type} initialVotesAmt={_votesAmt} />
       {/* TODO: PostVotes */}
       <div className='w-0 flex-1'>
         <div className='max-h-40 mt1 text-xs text-gray-500'>
@@ -48,9 +53,9 @@ const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
     </div>
     <div className='bg-gray-50 z-20 text-sm p-4 sm:px-6'>
       <a className='w-fit flex items-center gap-2' href={`/r/${subredditName}/post/${post.id}`}>
-          <MessageSquare className='h-3 w-4'/>
-          {commentAmt} comments
-          
+        <MessageSquare className='h-3 w-4' />
+        {commentAmt} comments
+
       </a>
 
     </div>
