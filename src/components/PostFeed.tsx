@@ -67,7 +67,5 @@ const PostFeed: FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
             })}
         </ul>
 
-    )
-// }6:03:55 / 9:46:45
-
+    )}
 export default PostFeed
