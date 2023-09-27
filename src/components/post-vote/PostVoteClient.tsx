@@ -88,8 +88,6 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
                     'text-red-500 fill-red-500': currentVote === 'DOWN'
                 })} />
             </Button>
-
-
         </div>
     )
 }
