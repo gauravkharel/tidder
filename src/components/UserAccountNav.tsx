@@ -42,7 +42,7 @@ const UserAccountNav = ({ user }: UserAccountNavProps) => {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild >
-                    <Link href="/r/setting">Setting</Link>
+                    <Link href="/r/settings">Setting</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
