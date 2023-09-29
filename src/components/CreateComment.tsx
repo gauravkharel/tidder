@@ -52,7 +52,8 @@ const CreateComment: FC<CreateCommentProps> = ({ postId, replyToId}) => {
         
     })
 
-    return <div className='grid w-full gap-1.5'>
+    return (
+    <div className='grid w-full gap-1.5'>
         <Label htmlFor='comment' >Your Comment</Label>
         <div className='mt-2'>
             <Textarea id='comment' value={input} onChange={(e) => setInput(e.target.value)} rows={1} placeholder='Just say whatever your opinion is or,just a joke' />
@@ -62,6 +63,7 @@ const CreateComment: FC<CreateCommentProps> = ({ postId, replyToId}) => {
             </div>
         </div>
     </div>
+    )
 }
 
 export default CreateComment
