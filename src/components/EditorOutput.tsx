@@ -29,8 +29,10 @@ const renderers = {
 }
 
 const EditorOutput: FC<EditorOutputProps> = ({content}) => {
-    // @ts-expect-error
-  return <Output className="text-sm" renderer={renderers} style={style} data={content}  />
+    return( 
+      // @ts-ignore
+     <Output className="text-sm" renderer={renderers} style={style} data={content}  />
+     )
 }
 
 function CustomCodeRenderer({data}: any){
