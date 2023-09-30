@@ -11,9 +11,15 @@ import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { usePathname } from "next/navigation"
 import { useRouter } from "next/navigation"
+import { PostVoteValidator } from "@/lib/validators/vote"
+
+import '@/styles/editor.css'
+import { z } from "zod"
+
+type FormData = z.infer<typeof PostVoteValidator>
 
 interface EditorProps {
-    subredditId
+    subredditId: string
 }
 
 const Editor: FC<EditorProps> = ({ subredditId }) => {
@@ -40,33 +46,33 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
 
     const { mutate: createPost } = useMutation({
         mutationFn: async ({
-          title,
-          content,
-          subredditId,
+            title,
+            content,
+            subredditId,
         }: PostCreationRequest) => {
-          const payload: PostCreationRequest = { title, content, subredditId }
-          const { data } = await axios.post('/api/subreddit/post/create', payload)
-          return data
+            const payload: PostCreationRequest = { title, content, subredditId }
+            const { data } = await axios.post('/api/subreddit/post/create', payload)
+            return data
         },
         onError: () => {
-          return toast({
-            title: 'Something went wrong.',
-            description: 'Your post was not published. Please try again.',
-            variant: 'destructive',
-          })
+            return toast({
+                title: 'Something went wrong.',
+                description: 'Your post was not published. Please try again.',
+                variant: 'destructive',
+            })
         },
         onSuccess: () => {
-          // turn pathname /r/mycommunity/submit into /r/mycommunity
-          const newPathname = pathname.split('/').slice(0, -1).join('/')
-          router.push(newPathname)
-    
-          router.refresh()
-    
-          return toast({
-            description: 'Your post has been published.',
-          })
+            // turn pathname /r/mycommunity/submit into /r/mycommunity
+            const newPathname = pathname.split('/').slice(0, -1).join('/')
+            router.push(newPathname)
+
+            router.refresh()
+
+            return toast({
+                description: 'Your post has been published.',
+            })
         },
-      })
+    })
 
     const intializeEditor = useCallback(async () => {
         const EditorJS = (await import('@editorjs/editorjs')).default
@@ -186,6 +192,13 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
                     {...rest}
                     placeholder="Title" className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none" />
                 <div id='editor' className="min-h-[500px]" />
+                <p className='text-sm text-gray-500'>
+                    Use{' '}
+                    <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>
+                        Tab
+                    </kbd>{' '}
+                    to open the command menu.
+                </p>
             </div>
         </form>
     </div>
